@@ -18,7 +18,16 @@ class Window(QWidget):
         self.InitWindow()
         self.show()
     def InitWindow(self):
-        
+        myFont = QtGui.QFont('Times', 18)
+        myFont.setBold(True)
+        self.window().setWindowTitle("Wake Up!")
+        self.groupBox = QGroupBox("Welcome to Your Favourite Detector")
+        #self.groupBox.setStyleSheet("color=red")
+        self.groupBox.setStyleSheet(stylesheet)
+        self.groupBox.setFont(QtGui.QFont("Lucida Console", 25))
+        self.Main = QFormLayout()
+        #  self.centralwidget = QWidget()
+        #  self.setCentralWidget(self.centralwidget)
         self.pushButton1 = QPushButton("Drowsiness Detection")
         self.pushButton1.setStyleSheet("color:Blue")
         self.pushButton2 = QPushButton("SeatBuilt Detector")
@@ -33,7 +42,32 @@ class Window(QWidget):
         self.pushButton1.clicked.connect(drowsiness_detector)
         self.pushButton2.clicked.connect(seat_built_detector)
         self.pushButton2.adjustSize()
-        
+        self.centered_text = QLabel('''
+            Choose your Wanted Functionality and Enjoy..
+            If you wanted anytime to finish detecting, 
+                        just PRESS ESC
+            Then you'll be able to choose another Functionality.
+                ''')
+        self.centered_text.setFont(myFont)
+        self.centered_text.setAlignment(QtCore.Qt.AlignHCenter)
+        self.centered_text.setStyleSheet("color:red")
+        self.container = QVBoxLayout()
+        self.container.addWidget(self.centered_text)
+        self.Main.addRow(self.container)
+        self.Main.addRow(self.pushButton1)
+        self.Main.addRow(self.pushButton2)
+        self.groupBox.setLayout(self.Main)
+        self.vBox = QVBoxLayout()
+        self.vBox.addWidget(self.groupBox)
+        self.vBox.setAlignment(QtCore.Qt.AlignHCenter)
+        self.setStyleSheet(stylesheet)
+        self.setLayout(self.vBox)
+        self.vBox.addStretch(1)
+
+        #  self.centralwidget = QWidget()
+        #  self.setCentralWidget(self.centralwidget)
+        self.setStyleSheet("color:black")
+        self.show()
 
 if __name__ == "__main__":
     import sys
