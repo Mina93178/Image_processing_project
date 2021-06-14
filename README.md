@@ -1,7 +1,7 @@
 # Image_processing_project
 
 Team Members:
-1- Hazem Mousa
+1- Hazem Muhammad Zaki
 2- ibrahim shoukry 
 3- zeiad Tarek
 4- Mina Wagdy
