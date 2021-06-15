@@ -2,25 +2,31 @@ import cv2
 import numpy as np
 import winsound
 
+
 # Slope of line
 def dy_by_dx(a, b, c, d):
     return (d - b) / (c - a)
 def seat_built_detector():
+    dummy_counter = 0
     video = cv2.VideoCapture(0)
+
     while True:
 
-        _ , instantaneous_photo = video.read()
+        _, instantaneous_photo = video.read()
+
+        # Converting To GrayScale
+
 
         # No Belt Detected Yet
         belt = False
-        # Converting To GrayScale
         grey_scale_built = cv2.cvtColor(instantaneous_photo, cv2.COLOR_BGR2GRAY)
         # Bluring The Image For Smoothness
         blur = cv2.blur(grey_scale_built, (1, 1))
-        # Converting Image To Edges
+
         image_edges = cv2.Canny(blur, 50, 400)
         previous_slope = 0
-        #intillization
+
+
         previous_x1, previous_y1, previous_x2, previous_y2 = 0, 0, 0, 0
 
         # Extracting Lines
@@ -43,25 +49,27 @@ def seat_built_detector():
 
                         if (((abs(current_x1 - previous_x1) > 2) and (abs(current_x2 - previous_x2) > 2)) or (
                                 (abs(current_y1 - previous_y2) > 2) and (abs(current_y2 - previous_y2) > 2))):
-                                #draw lines around belt seat 
-                            cv2.line(instantaneous_photo, (current_x1, current_y1), (current_x2, current_y2), (0, 0, 255), 3)
+                            cv2.line(instantaneous_photo, (current_x1, current_y1), (current_x2, current_y2), (255, 100, 255), 3)
                             cv2.line(instantaneous_photo, (previous_x1, previous_y1), (previous_x2, previous_y2), (255, 100, 255), 3)
-                            
-                            print("Belt Detected")
-                            belt = True
-                            
+                            dummy_counter+=1
+
+                        print("Belt Detected")
+
+                        belt = True
+
                 # Otherwise Current Slope Becomes Previous Slope (ps) And Current Line Becomes Previous Line (px1, py1, px2, py2)
                 previous_slope = current_line_slope
                 previous_x1,previous_y1, previous_x2, previous_y2 = line[0]
+            if (dummy_counter > 2):
+               winsound.PlaySound("seat_belt_tone_bmw.wav", winsound.SND_FILENAME)
+               dummy_counter = 0
+            else:
+                dummy_counter = 0
 
         cv2.imshow("Seat Belt", instantaneous_photo)
-        # show on screen seat belt is done 
-        if (belt == True) :
-            cv2.putText(instantaneous_photo,'seat belt is ok ',(10,500), 1,(255,0,0),2)
-            winsound.PlaySound("y2mate.com - Demon Slayer_ Kimetsu no Yaiba OST - To Destroy The Evil_320kbps.mp3", winsound.SND_FILENAME)
-            break
-
+        
         # Show The "beltframe"
+
         key = cv2.waitKey(10)
         if key == 27:
             break
@@ -69,4 +77,4 @@ def seat_built_detector():
     cv2.destroyAllWindows()
 
 
-seat_built_detector()
+#seat_built_detector()
