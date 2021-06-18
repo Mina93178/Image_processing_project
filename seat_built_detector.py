@@ -22,10 +22,10 @@ def seat_built_detector():
         grey_scale_built = cv2.cvtColor(instantaneous_photo, cv2.COLOR_BGR2GRAY)
         # Bluring The Image For Smoothness
         blur = cv2.blur(grey_scale_built, (1, 1))
-
+        # Converting Image To Edges
         image_edges = cv2.Canny(blur, 50, 400)
+        
         previous_slope = 0
-
 
         previous_x1, previous_y1, previous_x2, previous_y2 = 0, 0, 0, 0
 
@@ -60,6 +60,7 @@ def seat_built_detector():
                 # Otherwise Current Slope Becomes Previous Slope (ps) And Current Line Becomes Previous Line (px1, py1, px2, py2)
                 previous_slope = current_line_slope
                 previous_x1,previous_y1, previous_x2, previous_y2 = line[0]
+            # check 3 times before start music 
             if (dummy_counter > 2):
                winsound.PlaySound("seat_belt_tone_bmw.wav", winsound.SND_FILENAME)
                dummy_counter = 0
@@ -71,6 +72,7 @@ def seat_built_detector():
         # Show The "beltframe"
 
         key = cv2.waitKey(10)
+        # exit when you press esc
         if key == 27:
             break
     video.release()
