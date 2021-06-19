@@ -9,6 +9,7 @@ Team Members:
 
 for vedio link: https://youtu.be/7d4miBMeq6s
 
+for exe file : https://drive.google.com/file/d/1B2WKGv8vbk5WXlo4PNMQIn0lyBN-L_wM/view?usp=sharing
 
 The project has 2 Features:
 1- Real Time Drowsiness Detection
