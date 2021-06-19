@@ -9,7 +9,7 @@ frontal_shot = dlib.get_frontal_face_detector()
 # which detects the frontal face of humans which is compatible with the task of our project
 landmarks = dlib.shape_predictor("landmarks.dat")
 # shape predictor function returns the post-trained face data ,
-# so " landmarks " variable will contain the location of each landmark or we can say benchmark on the human's face
+# so " landmarks " variable will contain the location of each landmark or we can say benchmark on the human's  face
 while True:
     _, instantaneous_photo = video.read()
     gray_frame = cv2.cvtColor(instantaneous_photo, cv2.COLOR_BGR2GRAY)
